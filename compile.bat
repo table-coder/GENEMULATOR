@@ -12,7 +12,7 @@ if "%1"=="-test" (
 REM npm install electron-packager --save-dev
 
 echo Building app...
-npx electron-packager . GenEmulator --platform=win32 --arch=x64 --out=build/
+npx electron-packager . GenEmulator --platform=win32 --arch=x64 --out=build/ --ignore="(^/(\.vscode|source)(/|$)|^/(\.gitattributes|\.gitignore|build\.hxml|compile\.bat|datareceiver|hxformat\.json|Project\.xml|README\.md)$)"
 
 explorer build\GenEmulator\Genemulator.exe
 echo --------------------------
