@@ -15,3 +15,6 @@ Uses JavaScript (Node.JS Electron, to be specific), Haxe & C++ (when KYR support
 - Saunter/Table (me): Main Coder
 - [CopiluCuSarmale](https://github.com/ChaosHunterOK/): .KYR Support
 
+
+
+To see how to work with this, check the  __Wiki__
