@@ -1,0 +1,4 @@
+# Haxe -> JS build config
+-cp source
+-main Main
+-js output.js
