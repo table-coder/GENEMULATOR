@@ -3,6 +3,12 @@ const { app, BrowserWindow, Menu, ipcMain, dialog, ipcRenderer, contextBridge } 
 const path = require('path');
 const fs = require('fs');
 const AdmZip = require('adm-zip');
+const express = require('express');
+const server = express();
+
+
+
+
 
 function clearDirectory(dirPath) {
   if (fs.existsSync(dirPath)) {
@@ -30,7 +36,12 @@ function createWindow () {
   });
 
   const tempAssetsDir = path.join(app.getPath('temp'), 'genemulator-assets');
-  const gromtmpassets = tempAssetsDir.replace(/\\/g, '\\\\');
+  server.use(express.static(tempAssetsDir));
+
+  server.listen(8000, () => {
+    console.log('Serving files from:', tempAssetsDir);
+    console.log('Server at http://localhost:8000/');
+  });
   
 
   const menuTemplate = [
@@ -85,7 +96,7 @@ function createWindow () {
                 setTimeout(() => {
                   win.webContents.executeJavaScript(
                     `const gromAssetPath = "${tempAssetsDir.replace(/\\/g, '\\\\')}";
-                    window.vm._assetPath = gromAssetPath;
+                    window.vm._assetPath = "http://localhost:8000/";
                     window.vm._isPMPPackaged = true;`
                   ).catch(err => {
                     console.error('Failed to set asset path:', err);

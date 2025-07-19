@@ -13,6 +13,7 @@ REM npm install electron-packager --save-dev
 
 echo Building app...
 npx electron-packager . GenEmulator --platform=win32 --arch=x64 --out=build/
+
 explorer build\GenEmulator\Genemulator.exe
 echo --------------------------
 echo Build complete. You can find the executable in the build folder.
