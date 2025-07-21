@@ -2,14 +2,7 @@
 (function ($global) { "use strict";
 var Main = function() { };
 Main.main = function() {
-	console.log("source/Main.hx:7:","Hello from Haxe!");
-	genem_AudioPMP.playsound("assets/sounds/startup.wav");
-	window.document.body.style.backgroundColor = "#000000";
-};
-var genem_AudioPMP = function() { };
-genem_AudioPMP.playsound = function(url) {
-	var sound = new Audio(url);
-	sound.play();
+	console.log("source/Main.hx:8:","hi");
 };
 var haxe_iterators_ArrayIterator = function(array) {
 	this.current = 0;

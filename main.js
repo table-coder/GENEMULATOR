@@ -5,7 +5,7 @@ const fs = require('fs');
 const AdmZip = require('adm-zip');
 const express = require('express');
 const server = express();
-
+const { spawn } = require("child_process");
 
 
 
@@ -49,7 +49,7 @@ function createWindow () {
         label: 'File',
         submenu: [
         {
-            label: 'Load .GROM/.ZIP (must have .GROM in) ...',
+            label: 'Load .GROM...',
             click: async () => {
               const { canceled, filePaths } = await dialog.showOpenDialog({
                 filters: [{ name: 'GROM Files', extensions: ['grom', 'zip'] }],
@@ -117,9 +117,20 @@ function createWindow () {
             },
         },
         {
-            label: 'Load .BIN/.ZIP (must have .bin i think idk)/.32X/.GEN....',
+            label: 'Load .KYR',
             click: () => {
-            alert('This feature is not implemented yet. Please load GROM files instead.');
+              // Show the file selector
+              dialog.showOpenDialog(win, {
+                title: "Select a file",
+                properties: ['openFile'],
+                filters: [
+                  {name: "KYR Roms", extensions: ['kyr']}
+                ]
+              }).then(result => {
+                if (!result.canceled) {
+                  spawn(result.filePaths, [], { detached: true });
+                }
+              });
             }
         },
         { type: 'separator' },
