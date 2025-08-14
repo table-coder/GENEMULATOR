@@ -8,7 +8,11 @@ const server = express();
 const { spawn } = require("child_process");
 
 
-
+async function waitUntil(conditionFn) {
+  while (!conditionFn()) {
+    await new Promise(r => setTimeout(r, 50))
+  }
+};
 
 function clearDirectory(dirPath) {
   if (fs.existsSync(dirPath)) {
@@ -56,6 +60,19 @@ function createWindow () {
                 properties: ['openFile']
               });
               if (canceled || filePaths.length === 0) return;
+              var stuffCameIn = false;
+              ipcMain.on('stuff', (event, value) => {
+                var isGrom = value.isGrom;
+                var vmType = value.vmType;
+                stuffCameIn = true;
+                console.log('working! ' + isGrom + vmType);
+              });
+              await waitUntil(() => stuffCameIn);
+
+              if (isGrom == true) {
+                location.reload();
+                await waitUntil(() => vmType == "object");
+              };
 
               // Clear previous assets
               if (fs.existsSync(tempAssetsDir)) clearDirectory(tempAssetsDir);
@@ -97,7 +114,8 @@ function createWindow () {
                   win.webContents.executeJavaScript(
                     `const gromAssetPath = "${tempAssetsDir.replace(/\\/g, '\\\\')}";
                     window.vm._assetPath = "http://localhost:8000/";
-                    window.vm._isPMPPackaged = true;`
+                    window.vm._isPMPPackaged = true
+                    window.vm._isInGrom = true`
                   ).catch(err => {
                     console.error('Failed to set asset path:', err);
                   })

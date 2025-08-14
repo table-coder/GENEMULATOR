@@ -327,9 +327,21 @@
   </script>
   <script>
     var readygrom = false;
+    console.log(readygrom);
 
-
-
+    const { ipcRenderer } = require('electron');
+    const isInGrom = window.vm._isInGrom;
+    console.log(isInGrom);
+    const vmType = typeof vm;
+    console.log(vmType);
+    ipcRenderer.send('stuff', {
+      'isGrom': isInGrom,
+      'vmType': vmType
+    });
+    console.log(`{
+      'isGrom': isInGrom,
+      'vmType': vmType
+    }`);
   </script>
 </body>
 </html>
